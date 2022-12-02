@@ -21,8 +21,6 @@ class MainActivity: AppCompatActivity() {
     private val PERMISSIONS_REQUEST_CODE = 100
 
 
-
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -69,7 +67,16 @@ class MainActivity: AppCompatActivity() {
             null, // フィルタ用パラメータ
             null // ソート (nullソートなし）
         )
-        //cursor!!.moveToFirst()//firstを使った場合にその次のアクションがわからず、nextを使っている
+
+        cursor!!.moveToFirst()
+        val fieldIndex =
+            cursor.getColumnIndex(MediaStore.Images.Media._ID)//cursor.getColumnIndex()で現在cursorが指しているデータの中から画像のIDがセットされている位置を取得
+        val id = cursor.getLong(fieldIndex)//cursor.getLong()で画像のIDを取得,カーソルクラスのgetLongメソッド
+        val imageUri = ContentUris.withAppendedId(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            id
+        )
+        imageView.setImageURI(imageUri)
 
         forward_button.setOnClickListener {
             //cursor!!.moveToFirst() は検索結果の最初のデータを指します
@@ -89,8 +96,8 @@ class MainActivity: AppCompatActivity() {
                 imageView.setImageURI(imageUri)
 
             }
-            if (!cursor.moveToNext()) {
-                cursor.moveToFirst()
+            //if (!cursor.moveToNext()) {
+              else  {cursor.moveToFirst()
 
                 val fieldIndex =
                     cursor.getColumnIndex(MediaStore.Images.Media._ID)//cursor.getColumnIndex()で現在cursorが指しているデータの中から画像のIDがセットされている位置を取得
@@ -102,9 +109,6 @@ class MainActivity: AppCompatActivity() {
                 // imageViewのsetImageURIメソッドを使い、URIが指している画像ファイルをImageViewに表示させていますmedia/13235
                 Log.d("ANDROID", "URI : " + imageUri.toString())
                 imageView.setImageURI(imageUri)
-
-
-
             }
 
         }
@@ -118,25 +122,24 @@ class MainActivity: AppCompatActivity() {
 
                 imageView.setImageURI(imageUri)
             }
-            if (!cursor.moveToPrevious()) {
+            // else if (!cursor.moveToPrevious()) {
+            else {
                 cursor.moveToLast()
 
                 val fieldIndex =
-                    cursor.getColumnIndex(MediaStore.Images.Media._ID)//cursor.getColumnIndex()で現在cursorが指しているデータの中から画像のIDがセットされている位置を取得
+                cursor.getColumnIndex(MediaStore.Images.Media._ID)//cursor.getColumnIndex()で現在cursorが指しているデータの中から画像のIDがセットされている位置を取得
                 val id = cursor.getLong(fieldIndex)//cursor.getLong()で画像のIDを取得,カーソルクラスのgetLongメソッド
                 val imageUri = ContentUris.withAppendedId(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    id
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                id
                 )//ContentUris.withAppendedId()でそこから実際の画像のURIを取得してログに出力
-                // imageViewのsetImageURIメソッドを使い、URIが指している画像ファイルをImageViewに表示させていますmedia/13235
-                Log.d("ANDROID", "URI : " + imageUri.toString())
+            // imageViewのsetImageURIメソッドを使い、URIが指している画像ファイルをImageViewに表示させていますmedia/13235
+                Log.d("ANDROID", "URI :back " + imageUri.toString())
                 imageView.setImageURI(imageUri)
-
-
-
             }
-
         }
+
+
 
         start_reset_button.setOnClickListener {
 
