@@ -16,7 +16,7 @@ class MainActivity: AppCompatActivity() {
 
     //private var mTimerSec = 0.0
     private var mTimer: Timer? = null
-    private var mTimerRunning = false
+    //private var mTimerRunning = false
 
     private val PERMISSIONS_REQUEST_CODE = 100
 
@@ -96,7 +96,7 @@ class MainActivity: AppCompatActivity() {
                 imageView.setImageURI(imageUri)
 
             }
-            //if (!cursor.moveToNext()) {
+            //if (!cursor.moveToNext()) {このコードでカーソルが進むので1クリックで2個画像が進んでいた
               else  {cursor.moveToFirst()
 
                 val fieldIndex =
@@ -167,7 +167,7 @@ class MainActivity: AppCompatActivity() {
                 forward_button.isEnabled = false
                 back_button.isEnabled = false
 
-                mTimer = Timer()
+                mTimer = Timer()//インスタンス作っている
                 mTimer!!.schedule(object : TimerTask() {
                     // TimerTask task にはタイマー処理を記述するためのクラスを作成してインスタンスを渡します。
                     //mTimer.schedule() を使うと、アプリが終了するまで、run() 内のコードを実行し続けます。
@@ -192,7 +192,7 @@ class MainActivity: AppCompatActivity() {
 
                             }
 
-                            if (!cursor.moveToNext()) {
+                           else{
                                 cursor.moveToFirst()
 
 
